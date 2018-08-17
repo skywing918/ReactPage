@@ -37,7 +37,7 @@ Before starting with project, please headover to [CRA](https://github.com/facebo
 
 1. Clone this repo
 
-`https://github.com/mohandere/cra-boilerplate.git`
+`https://github.com/skywing918/reactpage.git`
 
 2. To run, go to project folder and run
 
@@ -63,16 +63,6 @@ To create production ready codes -
 
 for more commands refer `package.json`
 
-
-## Roadmap
-
-Before starting development please go through -
-
-- [Presentational and Container Components
-](https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0)
-- [All the fundamental React.js concepts, jammed into this single Medium article](https://medium.freecodecamp.org/all-the-fundamental-react-js-concepts-jammed-into-this-single-medium-article-c83f9b53eac2)
-- [Tips to learn React + Redux](https://www.robinwieruch.de/tips-to-learn-react-redux/)
-- [When do I know I’m ready for Redux?](https://medium.com/dailyjs/when-do-i-know-im-ready-for-redux-f34da253c85f)
 
 ## Code structure
 
@@ -109,7 +99,6 @@ Next as per need, add sub folders like -
 
 - `src/home/actions/`
 - `src/home/reducers/`
-- `src/home/epics/`
 - `src/home/containers/`
 - `src/home/components/`
 
@@ -157,22 +146,6 @@ To analyzing bundle, run command -
 `$ npm run analyze` / `$ yarn analyze`
 
 
-## Code splitting
-
-Create React App(CRA) by default bundle out entire app into single main.*.js file with Webpack. As our app grows, bundle grows. So instead of downloading the entire app(This hurts the initial load time of our app.) before users can use it, We can split code into small chunks which we can then load on demand and Code splitting is really helpful for larger React apps.
-
-Check out [this](https://mohandere.github.io/mplayground/#/blog/post/2018/03/01/analyzing-the-bundle-size-code-splitting-in-create-react-app/).  example for how to implementation Code splitting and how it helps to load application faster.
-
-This boilerplate using [react-loadable](https://github.com/jamiebuilds/react-loadable) for code splitting.
-
-Open `src/App.js` and edit this line to -
-
-`import routes from './routes';`
-
- To
-
-`import routes from './asyncRoutes';`
-
 ## Deployment
 
 Refer [deployment](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md#deployment) section from CRA doc.
@@ -180,7 +153,7 @@ Refer [deployment](https://github.com/facebook/create-react-app/blob/master/pack
 
 ## Something Missing?
 
-File an issue [here](https://github.com/mohandere/cra-boilerplate/issues).
+File an issue [here](https://github.com/skywing918/reactpage/issues).
 
 
 ## License
