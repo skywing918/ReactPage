@@ -4,9 +4,6 @@
 This project is an [Create React App - v1.1.4](https://github.com/facebookincubator/create-react-app) boilerplate
 with integration of Redux, React Router, Redux observable & Reactstrap(Bootstrap v4) and Scss for quick start enterprise level applications.
 
-[![Build Status](https://travis-ci.org/mohandere/cra-boilerplate.svg?branch=master)](https://travis-ci.org/mohandere/cra-boilerplate) [![Dependency Status](https://dependencyci.com/github/mohandere/cra-boilerplate/badge)](https://dependencyci.com/github/mohandere/cra-boilerplate)
-
-
 
 Before starting with project, please headover to [CRA](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md
 ) documentation.
