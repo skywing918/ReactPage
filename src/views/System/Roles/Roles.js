@@ -5,7 +5,7 @@ import rolesData from './RolesData'
 
 function RoleRow(props) {
   const role = props.role
-  const roleLink = `#/system/roles/${role.id}`
+  const roleLink = `/system/roles/${role.id}`
 
   return (
       <tr key={role.id.toString()}>

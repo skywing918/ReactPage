@@ -1,11 +1,13 @@
 ﻿import React, { Component } from 'react';
 import { Form, FormGroup, Label, Input, Button, Badge, Card, CardBody, CardHeader, Col, Row, Table, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 
+import { connect } from 'react-redux';
+import { userActions } from '../../../_actions';
 import usersData from './UsersData'
 
 function UserRow(props) {
   const user = props.user
-  const userLink = `#/system/users/${user.id}`
+  const userLink = `/system/users/${user.id}`
 
   const getBadge = (status) => {
     return status === 'Active' ? 'success' :
@@ -19,7 +21,7 @@ function UserRow(props) {
       <tr key={user.id.toString()}>
         <th scope="row"><input type="checkbox" /></th>
         <th scope="row"><a href={userLink}>{user.id}</a></th>
-        <td><a href={userLink}>{user.name}</a></td>
+        <td><a href={userLink}>{user.firstName + ' ' + user.lastName}</a></td>
         <td>{user.userId}</td>
         <td>{user.mobilePhone}</td>
         <td>{user.role}</td>
@@ -32,14 +34,17 @@ function UserRow(props) {
 
 
 class Users extends Component {
+    componentDidMount() {
+        this.props.dispatch(userActions.getAll());
+    }
 
   handleCreate = () => {
-      window.location = '#/system/usersCreate';
+      window.location = '/system/usersCreate';
   }
 
   render() {
-
-    const userList = usersData.filter((user) => user.id < 10)
+    const { user, users } = this.props;
+    //const userList = this.props;//usersData.filter((user) => user.id < 10)
 
     return (
       <div className="animated fadeIn">
@@ -104,11 +109,15 @@ class Users extends Component {
                             <th scope="col">创建时间</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {userList.map((user, index) =>
+                    
+                    {users.items &&
+                        <tbody>
+                        {users.items.map((user, index) =>
                             <UserRow key={index} user={user} />
                         )}
-                    </tbody>
+                        </tbody>
+                    }
+                   
                 </Table>
                 <nav>
                     <Pagination>
@@ -131,5 +140,13 @@ class Users extends Component {
     )
   }
 }
+function mapStateToProps(state) {
+    const { users, authentication } = state;
+    const { user } = authentication;
+    return {
+        user,
+        users
+    };
+}
 
-export default Users;
+export default connect(mapStateToProps)(Users);
