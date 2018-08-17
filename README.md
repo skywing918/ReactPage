@@ -6,7 +6,7 @@ with integration of Redux, React Router, Redux observable & Reactstrap(Bootstrap
 
 [![Build Status](https://travis-ci.org/mohandere/cra-boilerplate.svg?branch=master)](https://travis-ci.org/mohandere/cra-boilerplate) [![Dependency Status](https://dependencyci.com/github/mohandere/cra-boilerplate/badge)](https://dependencyci.com/github/mohandere/cra-boilerplate)
 
-### [Demo](https://mohandere.github.io/cra-boilerplate/#/)
+
 
 Before starting with project, please headover to [CRA](https://github.com/facebook/create-react-app/blob/master/packages/react-scripts/template/README.md
 ) documentation.
