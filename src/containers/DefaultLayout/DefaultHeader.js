@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 import logo from '../../assets/img/brand/logo.svg'
 import sygnet from '../../assets/img/brand/sygnet.svg'
+import { connect } from 'react-redux';
 
 const propTypes = {
   children: PropTypes.node,
@@ -14,8 +15,9 @@ const propTypes = {
 const defaultProps = {};
 
 class DefaultHeader extends Component {
+  
   render() {
-
+    const { user } = this.props;
     // eslint-disable-next-line
     const { children, ...attributes } = this.props;
 
@@ -32,7 +34,7 @@ class DefaultHeader extends Component {
           <AppHeaderDropdown direction="down">
             <DropdownToggle nav>
                         <img src={'assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
-                        <span>Admin</span>
+                        <span>{user.role}</span>
             </DropdownToggle>
             <DropdownMenu right style={{ right: 'auto' }}>
               <DropdownItem><Link to="/login"><i className="fa fa-lock"></i> Logout</Link></DropdownItem>
@@ -48,4 +50,12 @@ class DefaultHeader extends Component {
 DefaultHeader.propTypes = propTypes;
 DefaultHeader.defaultProps = defaultProps;
 
-export default DefaultHeader;
+function mapStateToProps(state) {
+  const { authentication } = state;
+  const { user } = authentication;
+  return {
+      user
+  };
+}
+
+export default connect(mapStateToProps)(DefaultHeader);

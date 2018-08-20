@@ -19,7 +19,7 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     };
 
-    return fetch(`${apiUrl}/users/authenticate`, requestOptions)
+    return fetch(`${apiUrl}/account/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // login successful if there's a jwt token in the response
@@ -43,7 +43,7 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(`${apiUrl}/users`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/account`, requestOptions).then(handleResponse);
 }
 
 function getById(id) {
@@ -62,7 +62,7 @@ function register(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`${apiUrl}/users/register`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/account/register`, requestOptions).then(handleResponse);
 }
 
 function update(user) {

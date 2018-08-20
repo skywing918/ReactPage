@@ -21,11 +21,11 @@ function UserRow(props) {
       <tr key={user.id.toString()}>
         <th scope="row"><input type="checkbox" /></th>
         <th scope="row"><a href={userLink}>{user.id}</a></th>
-        <td><a href={userLink}>{user.firstName + ' ' + user.lastName}</a></td>
-        <td>{user.userId}</td>
+        <td><a href={userLink}>{user.fullName}</a></td>
+        <td>{user.userName}</td>
         <td>{user.mobilePhone}</td>
-        <td>{user.role}</td>
-        <td><Badge href={userLink} color={getBadge(user.status)}>{user.status}</Badge></td>
+        <td>{user.userRole}</td>
+        <td><Badge href={userLink} color={getBadge(user.userStatus)}>{user.userStatus}</Badge></td>
         <td>{user.registered}</td>
     </tr>
   )
