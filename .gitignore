@@ -71,3 +71,8 @@ typings/
 
 # Serverless directories
 .serverless
+/.vs/VSWorkspaceState.json
+/.vs/slnx.sqlite
+/.vs/ReactPage/v15/.suo
+/.vs/ReactPage/v15
+/.vs

@@ -15,7 +15,7 @@ const propTypes = {
 const defaultProps = {};
 
 class DefaultHeader extends Component {
-  
+
   render() {
     const { user } = this.props;
     // eslint-disable-next-line
@@ -30,11 +30,11 @@ class DefaultHeader extends Component {
         />
         <AppSidebarToggler className="d-md-down-none" display="lg" />
 
-         <Nav className="ml-auto" navbar style={{ paddingRight: '20px' }}>
+        <Nav className="ml-auto" navbar style={{ paddingRight: '20px' }}>
           <AppHeaderDropdown direction="down">
             <DropdownToggle nav>
-                        <img src={'assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
-                        <span>{user.role}</span>
+              <img src={'../assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
+              <span>{user.role}</span>
             </DropdownToggle>
             <DropdownMenu right style={{ right: 'auto' }}>
               <DropdownItem><Link to="/login"><i className="fa fa-lock"></i> Logout</Link></DropdownItem>
@@ -54,7 +54,7 @@ function mapStateToProps(state) {
   const { authentication } = state;
   const { user } = authentication;
   return {
-      user
+    user
   };
 }
 
