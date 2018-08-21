@@ -1,5 +1,5 @@
 const logsData = [
-    { id: 0, action: '增加', model: '账号管理', detail: '16098456389', registered: '2018/01/01', user: '张三/139000000'},
+    { id: 0, action: '增加', model: '账号管理', detail: '增加账号', registered: '2018/01/01', user: '张三/139000000'},
     { id: 1, action: '删除', model: '角色管理', detail: '16098456389', registered: '2018/01/01', user: '张三/139000000'},
     { id: 2, action: '删除', model: '角色管理', detail: '16098456389', registered: '2018/02/01', user: '张三/139000000'},
     { id: 3, action: '删除', model: '角色管理', detail: '16098456389', registered: '2018/02/01', user: '张三/139000000'},

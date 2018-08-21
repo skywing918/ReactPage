@@ -13,8 +13,8 @@ class CreateUser extends Component {
                 fullName: '',
                 userName: '',
                 mobilePhone: '',
-                userRole: '',
-                userStatus: '',
+                userRole: 'Admin',
+                userStatus: 'Active',
                 password: ''
             },
             submitted: false
@@ -64,7 +64,7 @@ class CreateUser extends Component {
                                             <Label htmlFor="text-input">姓名</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="text-input" placeholder="Text" name="fullName" value={user.fullName} onChange={this.handleChange} />
+                                            <Input type="text" id="text-input" name="fullName" value={user.fullName} onChange={this.handleChange} required />
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -72,7 +72,7 @@ class CreateUser extends Component {
                                             <Label htmlFor="text-input">工号</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="text-input" placeholder="Text" name="userName" value={user.userName} onChange={this.handleChange} />
+                                            <Input type="text" id="text-input" name="userName" value={user.userName} onChange={this.handleChange} required />
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -80,7 +80,7 @@ class CreateUser extends Component {
                                             <Label htmlFor="text-input">手机号码</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="text-input" placeholder="Text" name="mobilePhone" value={user.mobilePhone} onChange={this.handleChange} />
+                                            <Input type="text" id="text-input" name="mobilePhone" value={user.mobilePhone} onChange={this.handleChange} required />
                                         </Col>
                                     </FormGroup>
 
@@ -90,7 +90,6 @@ class CreateUser extends Component {
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="select" id="selectRole" name="userRole" value={user.userRole} onChange={this.handleChange}>
-                                                <option value="0">Please select</option>
                                                 <option value="Admin">Admin</option>
                                                 <option value="Manager">Manager</option>
                                                 <option value="Member">Member</option>
@@ -114,8 +113,7 @@ class CreateUser extends Component {
                                             <Label htmlFor="password-input">登陆密码</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="password" id="password-input" placeholder="Password" autoComplete="new-password" name="password" value={user.password} onChange={this.handleChange} />
-                                            <FormText className="help-block">Please enter a complex password</FormText>
+                                            <Input type="password" id="password-input" autoComplete="new-password" name="password" value={user.password} onChange={this.handleChange} required/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
@@ -123,8 +121,7 @@ class CreateUser extends Component {
                                             <Label htmlFor="password-input">确认密码</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="password" id="password-input" placeholder="Password" autoComplete="new-password" />
-                                            <FormText className="help-block">Please enter a complex password</FormText>
+                                            <Input type="password" id="password-input" autoComplete="new-password" required/>
                                         </Col>
                                     </FormGroup>
 
