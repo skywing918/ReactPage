@@ -15,7 +15,10 @@ const apiUrl = 'http://localhost:4000'
 function login(username, password) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*'
+        },
         body: JSON.stringify({ username, password })
     };
 
