@@ -64,7 +64,7 @@ class CreateUser extends Component {
                                         <Label htmlFor="text-input">姓名</Label>
                                     </Col>
                                     <Col xs="12" md="9">
-                                        <Input type="text" id="text-input" name="text-input" placeholder="Text"  name="fullName" value={user.fullName} onChange={this.handleChange}/>
+                                        <Input type="text" id="text-input" placeholder="Text"  name="fullName" value={user.fullName} onChange={this.handleChange}/>
                                     </Col>
                                  </FormGroup>
                                     <FormGroup row>
@@ -72,15 +72,15 @@ class CreateUser extends Component {
                                             <Label htmlFor="text-input">工号</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="text-input" name="text-input" placeholder="Text" name="userName" value={user.userName} onChange={this.handleChange}/>
+                                            <Input type="text" id="text-input" placeholder="Text" name="userName" value={user.userName} onChange={this.handleChange}/>
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
                                         <Col md="3">
-                                            <Label htmlFor="text-input">手机号</Label>
+                                            <Label htmlFor="text-input">手机号码</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="text-input" name="text-input" placeholder="Text" name="mobilePhone" value={user.mobilePhone} onChange={this.handleChange}/>
+                                            <Input type="text" id="text-input" placeholder="Text" name="mobilePhone" value={user.mobilePhone} onChange={this.handleChange}/>
                                         </Col>
                                     </FormGroup>
 
@@ -89,7 +89,7 @@ class CreateUser extends Component {
                                             <Label htmlFor="selectRole">角色</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="select" name="select" id="selectRole" name="userRole" value={user.userRole} onChange={this.handleChange}>
+                                            <Input type="select" id="selectRole" name="userRole" value={user.userRole} onChange={this.handleChange}>
                                                 <option value="0">Please select</option>
                                                 <option value="Admin">Admin</option>
                                                 <option value="Manager">Manager</option>
@@ -102,10 +102,9 @@ class CreateUser extends Component {
                                             <Label htmlFor="selectStatus">状态</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="select" name="select" id="selectStatus" name="userStatus" value={user.userStatus} onChange={this.handleChange}>
-                                                <option value="0">Please select</option>
-                                                <option value="Active">Active</option>
-                                                <option value="Inactive">inActive</option>
+                                            <Input type="select" id="selectStatus" name="userStatus" value={user.userStatus} onChange={this.handleChange}>
+                                                <option value="Active">可用</option>
+                                                <option value="Inactive">不可用</option>
                                             </Input>
                                         </Col>
                                     </FormGroup>
@@ -115,7 +114,7 @@ class CreateUser extends Component {
                                         <Label htmlFor="password-input">Password</Label>
                                     </Col>
                                     <Col xs="12" md="9">
-                                        <Input type="password" id="password-input" name="password-input" placeholder="Password" autoComplete="new-password" name="password" value={user.password} onChange={this.handleChange}/>
+                                        <Input type="password" id="password-input" placeholder="Password" autoComplete="new-password" name="password" value={user.password} onChange={this.handleChange}/>
                                         <FormText className="help-block">Please enter a complex password</FormText>
                                     </Col>
                                     </FormGroup>
@@ -124,7 +123,7 @@ class CreateUser extends Component {
                                             <Label htmlFor="password-input">Password</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="password" id="password-input" name="password-input" placeholder="Password" autoComplete="new-password" />
+                                            <Input type="password" id="password-input" placeholder="Password" autoComplete="new-password" />
                                             <FormText className="help-block">Please enter a complex password</FormText>
                                         </Col>
                                     </FormGroup>
