@@ -111,7 +111,7 @@ class CreateUser extends Component {
 
                                 <FormGroup row>
                                     <Col md="3">
-                                        <Label htmlFor="password-input">Password</Label>
+                                        <Label htmlFor="password-input">登陆密码</Label>
                                     </Col>
                                     <Col xs="12" md="9">
                                         <Input type="password" id="password-input" placeholder="Password" autoComplete="new-password" name="password" value={user.password} onChange={this.handleChange}/>
@@ -120,7 +120,7 @@ class CreateUser extends Component {
                                     </FormGroup>
                                     <FormGroup row>
                                         <Col md="3">
-                                            <Label htmlFor="password-input">Password</Label>
+                                            <Label htmlFor="password-input">确认密码</Label>
                                         </Col>
                                         <Col xs="12" md="9">
                                             <Input type="password" id="password-input" placeholder="Password" autoComplete="new-password" />
