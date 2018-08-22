@@ -28,12 +28,38 @@ function dateTimeFormatter(cell, row) {
 }
 
 class Users extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { selected: [] };
+
+    }
     componentDidMount() {
         this.props.dispatch(userActions.getAll());
     }
 
     handleCreate = () => {
         window.location = '/system/usersCreate';
+    }
+
+    handleDelete = () => {
+        const { dispatch } = this.props;
+        if (window.confirm('Are you sure you wish to delete this item?')){
+            this.state.selected.forEach(function(id){
+                dispatch(userActions.delete(id));
+            })
+        } 
+    }
+
+    handleOnSelect = (row, isSelect) => {
+        if (isSelect) {
+          this.setState(() => ({
+            selected: [...this.state.selected, row.id]
+          }));
+        } else {
+          this.setState(() => ({
+            selected: this.state.selected.filter(x => x !== row.id)
+          }));
+        }
     }
 
     render() {
@@ -71,7 +97,9 @@ class Users extends Component {
             }];
         const selectRow = {
             mode: 'checkbox',
-            clickToSelect: true
+            clickToSelect: true,
+            selected: this.state.selected,
+            onSelect: this.handleOnSelect,
         };
 
         return (
@@ -118,14 +146,14 @@ class Users extends Component {
                             <CardBody>
                                 <Row>
                                     <Button style={{ margin: '5px' }} onClick={this.handleCreate}>增加</Button>
-                                    <Button style={{ margin: '5px' }}>修改</Button>
-                                    <Button style={{ margin: '5px' }}>删除</Button>
+                                    <Button style={{ margin: '5px' }} >修改</Button>
+                                    <Button style={{ margin: '5px' }} onClick={this.handleDelete}>删除</Button>
                                     <Button style={{ margin: '5px' }}>密码重置</Button>
                                     <Button style={{ margin: '5px' }}>锁定</Button>
                                     <Button style={{ margin: '5px' }}>解锁</Button>
                                 </Row>
                                 {users.items &&
-                                    <BootstrapTable keyField='id' data={users.items} columns={columns} selectRow={selectRow} />
+                                    <BootstrapTable keyField='id' data={users.items} columns={columns} selectRow={selectRow}/>
                                 }
                             </CardBody>
                         </Card>
