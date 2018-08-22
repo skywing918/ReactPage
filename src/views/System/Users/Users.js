@@ -1,14 +1,12 @@
 ﻿import React, { Component } from 'react';
-import { Form, FormGroup, Label, Input, Button, Badge, Card, CardBody, CardHeader, Col, Row, Table, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { Form, FormGroup, Label, Input, Button, Badge, Card, CardBody, CardHeader, Col, Row } from 'reactstrap';
+
+import BootstrapTable from 'react-bootstrap-table-next';
 
 import { connect } from 'react-redux';
 import { userActions } from '../../../_actions';
-import usersData from './UsersData'
 
-function UserRow(props) {
-    const user = props.user
-    const userLink = `/system/users/${user.id}`
-
+function statusFormatter(cell, row) {
     const getBadge = (status) => {
         return status === 'Active' ? 'success' :
             status === 'Inactive' ? 'secondary' :
@@ -18,20 +16,16 @@ function UserRow(props) {
     }
 
     return (
-        <tr key={user.id.toString()}>
-            <th scope="row"><input type="checkbox" /></th>
-            <th scope="row"><a href={userLink}>{user.id}</a></th>
-            <td><a href={userLink}>{user.fullName}</a></td>
-            <td>{user.userName}</td>
-            <td>{user.mobilePhone}</td>
-            <td>{user.userRole}</td>
-            <td><Badge href={userLink} color={getBadge(user.userStatus)}>{user.userStatus}</Badge></td>
-            <td>{user.registered}</td>
-        </tr>
-    )
+        <Badge color={getBadge(row.userStatus)}>{row.userStatus}</Badge>
+    );
 }
 
-
+function dateTimeFormatter(cell, row) {
+    
+    return (
+        <span>{ new Date(cell).toLocaleDateString() } {new Date(cell).toLocaleTimeString()}</span>
+    );
+}
 
 class Users extends Component {
     componentDidMount() {
@@ -44,7 +38,41 @@ class Users extends Component {
 
     render() {
         const { user, users } = this.props;
-        //const userList = this.props;//usersData.filter((user) => user.id < 10)
+        const columns = [
+            {
+                dataField: 'id',
+                text: '序号'
+            },
+            {
+                dataField: 'fullName',
+                text: '姓名'
+            },
+            {
+                dataField: 'userName',
+                text: '工号'
+            },
+            {
+                dataField: 'mobilePhone',
+                text: '手机'
+            },
+            {
+                dataField: 'userRole',
+                text: '角色'
+            },
+            {
+                dataField: 'userStatus',
+                text: '状态',
+                formatter: statusFormatter
+            },
+            {
+                dataField: 'registered',
+                text: '创建时间',
+                formatter: dateTimeFormatter
+            }];
+        const selectRow = {
+            mode: 'checkbox',
+            clickToSelect: true
+        };
 
         return (
             <div className="animated fadeIn">
@@ -96,35 +124,9 @@ class Users extends Component {
                                     <Button style={{ margin: '5px' }}>锁定</Button>
                                     <Button style={{ margin: '5px' }}>解锁</Button>
                                 </Row>
-                                <Table responsive hover>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col"><input type="checkbox" /></th>
-                                            <th scope="col">序号</th>
-                                            <th scope="col">姓名</th>
-                                            <th scope="col">工号</th>
-                                            <th scope="col">手机号码</th>
-                                            <th scope="col">角色</th>
-                                            <th scope="col">状态</th>
-                                            <th scope="col">创建时间</th>
-                                        </tr>
-                                    </thead>
-
-                                    {users.items &&
-                                        <tbody>
-                                            {users.items.map((user, index) =>
-                                                <UserRow key={index} user={user} />
-                                            )}
-                                        </tbody>
-                                    }
-
-                                </Table>
-                                <nav>
-                                    <Pagination>
-                                        <PaginationItem><PaginationLink previous tag="button">上一页</PaginationLink></PaginationItem>
-                                        <PaginationItem><PaginationLink next tag="button">下一页</PaginationLink></PaginationItem>
-                                    </Pagination>
-                                </nav>
+                                {users.items &&
+                                    <BootstrapTable keyField='id' data={users.items} columns={columns} selectRow={selectRow} />
+                                }
                             </CardBody>
                         </Card>
                     </Col>
