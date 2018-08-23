@@ -26,8 +26,8 @@ class User extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.users!=this.state.detail) {
-      this.setState({...this.state, detail: nextProps.users.userDetails});
+    if (nextProps.users != this.state.detail) {
+      this.setState({ ...this.state, detail: nextProps.users.userDetails });
     }
   }
 
@@ -87,6 +87,18 @@ class User extends Component {
                       </Col>
                       <Col xs="12" md="9">
                         <Input type="text" id="text-input" name="mobilePhone" defaultValue={userDetails.mobilePhone} onChange={this.handleChange} required />
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                      <Col md="3">
+                        <Label htmlFor="selectRole">角色</Label>
+                      </Col>
+                      <Col xs="12" md="9">
+                        <Input type="select" id="selectRole" name="userRole" defaultValue={userDetails.userRole} onChange={this.handleChange}>
+                          <option value="Admin">Admin</option>
+                          <option value="Manager">Manager</option>
+                          <option value="Member">Member</option>
+                        </Input>
                       </Col>
                     </FormGroup>
                   </CardBody>
