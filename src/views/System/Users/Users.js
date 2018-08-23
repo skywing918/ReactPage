@@ -2,6 +2,7 @@
 import { Form, FormGroup, Label, Input, Button, Badge, Card, CardBody, CardHeader, Col, Row } from 'reactstrap';
 
 import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 
 import { connect } from 'react-redux';
 import { userActions } from '../../../_actions';
@@ -21,11 +22,19 @@ function statusFormatter(cell, row) {
 }
 
 function dateTimeFormatter(cell, row) {
-    
     return (
-        <span>{ new Date(cell).toLocaleDateString() } {new Date(cell).toLocaleTimeString()}</span>
+        <span>{new Date(cell).toLocaleDateString()} {new Date(cell).toLocaleTimeString()}</span>
     );
 }
+
+function customTotal(from, to, size) {
+    return (
+        <span className="react-bootstrap-table-pagination-total">
+            Showing {from} to {to} of {size} Results
+        </span>
+    );
+}
+
 
 class Users extends Component {
     constructor(props) {
@@ -41,24 +50,34 @@ class Users extends Component {
         window.location = '/system/usersCreate';
     }
 
+    handleUpdate = () => {
+        if (this.state.selected.length == 0) {
+            alert("请选择一条记录。")
+            return;
+        }
+        var curr = this.state.selected[0]
+        const userLink = `/system/users/${curr}`
+        window.location = userLink;
+    }
+
     handleDelete = () => {
         const { dispatch } = this.props;
-        if (window.confirm('Are you sure you wish to delete this item?')){
-            this.state.selected.forEach(function(id){
+        if (window.confirm('Are you sure you wish to delete this item?')) {
+            this.state.selected.forEach(function (id) {
                 dispatch(userActions.delete(id));
             })
-        } 
+        }
     }
 
     handleOnSelect = (row, isSelect) => {
         if (isSelect) {
-          this.setState(() => ({
-            selected: [...this.state.selected, row.id]
-          }));
+            this.setState(() => ({
+                selected: [...this.state.selected, row.id]
+            }));
         } else {
-          this.setState(() => ({
-            selected: this.state.selected.filter(x => x !== row.id)
-          }));
+            this.setState(() => ({
+                selected: this.state.selected.filter(x => x !== row.id)
+            }));
         }
     }
 
@@ -100,6 +119,30 @@ class Users extends Component {
             clickToSelect: true,
             selected: this.state.selected,
             onSelect: this.handleOnSelect,
+        };
+
+        const options = {
+            paginationSize: 4,
+            pageStartIndex: 1,
+            // alwaysShowAllBtns: true, // Always show next and previous button
+            //withFirstAndLast: false, // Hide the going to First and Last page button
+            // hideSizePerPage: true, // Hide the sizePerPage dropdown always
+            //hidePageListOnlyOnePage: true, // Hide the pagination list when only one page
+            firstPageText: 'First',
+            prePageText: 'Back',
+            nextPageText: 'Next',
+            lastPageText: 'Last',
+            nextPageTitle: 'First page',
+            prePageTitle: 'Pre page',
+            firstPageTitle: 'Next page',
+            lastPageTitle: 'Last page',
+            showTotal: true,
+            paginationTotalRenderer: customTotal,
+            sizePerPageList: [{
+                text: '5', value: 5
+            }, {
+                text: '10', value: 10
+            }] // A numeric array is also available. the purpose of above example is custom the text
         };
 
         return (
@@ -146,14 +189,14 @@ class Users extends Component {
                             <CardBody>
                                 <Row>
                                     <Button style={{ margin: '5px' }} onClick={this.handleCreate}>增加</Button>
-                                    <Button style={{ margin: '5px' }} >修改</Button>
+                                    <Button style={{ margin: '5px' }} onClick={this.handleUpdate}>修改</Button>
                                     <Button style={{ margin: '5px' }} onClick={this.handleDelete}>删除</Button>
                                     <Button style={{ margin: '5px' }}>密码重置</Button>
                                     <Button style={{ margin: '5px' }}>锁定</Button>
                                     <Button style={{ margin: '5px' }}>解锁</Button>
                                 </Row>
                                 {users.items &&
-                                    <BootstrapTable keyField='id' data={users.items} columns={columns} selectRow={selectRow}/>
+                                    <BootstrapTable keyField='id' data={users.items} columns={columns} selectRow={selectRow} pagination={paginationFactory(options)} />
                                 }
                             </CardBody>
                         </Card>

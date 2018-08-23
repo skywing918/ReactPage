@@ -33,7 +33,7 @@ class DefaultHeader extends Component {
         <Nav className="ml-auto" navbar style={{ paddingRight: '20px' }}>
           <AppHeaderDropdown direction="down">
             <DropdownToggle nav>
-              <img src={'../assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
+              <img src={'/assets/img/avatars/6.jpg'} className="img-avatar" alt="admin@bootstrapmaster.com" />
               <span>{user.role}</span>
             </DropdownToggle>
             <DropdownMenu right style={{ right: 'auto' }}>

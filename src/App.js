@@ -8,6 +8,9 @@ import { PrivateRoute } from './_components';
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
 
+// react-bootstrap-table2-paginator Styles
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 // CoreUI Icons Set
 import '@coreui/icons/css/coreui-icons.min.css';
 // Import Flag Icons Set

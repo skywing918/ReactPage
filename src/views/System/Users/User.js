@@ -1,46 +1,118 @@
 import React, { Component } from 'react';
-import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { Form, FormGroup, Label, Input, Button, FormText, Card, CardFooter, CardBody, CardHeader, Col, Row } from 'reactstrap';
 
-import usersData from './UsersData'
+import { connect } from 'react-redux';
+import { userActions } from '../../../_actions';
 
 class User extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      detail: {
+        fullName: '',
+        userName: '',
+        mobilePhone: '',
+        userRole: '',
+        userStatus: '',
+        password: ''
+      },
+      updated: false
+    };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.users!=this.state.detail) {
+      this.setState({...this.state, detail: nextProps.users.userDetails});
+    }
+  }
+
+  componentDidMount() {
+    this.props.dispatch(userActions.getById(this.props.match.params.id));
+  }
+
+  handleChange(event) {
+    const { name, value } = event.target;
+    const { detail } = this.state;
+    this.setState({ updated: true });
+    this.setState({
+      detail: {
+        ...detail,
+        [name]: value
+      }
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+
+    const { detail } = this.state;
+    const { dispatch } = this.props;
+    if (detail.userName) {
+      dispatch(userActions.update(detail.id, detail));
+    }
+  }
+
   render() {
-
-    const user = usersData.find( user => user.id.toString() === this.props.match.params.id)
-
-    const userDetails = user ? Object.entries(user) : [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]]
+    const { users } = this.props;
+    const userDetails = users.userDetails;
 
     return (
       <div className="animated fadeIn">
-        <Row>
-          <Col lg={6}>
-            <Card>
-              <CardHeader>
-                <strong><i className="icon-info pr-1"></i>User id: {this.props.match.params.id}</strong>
-              </CardHeader>
-              <CardBody>
-                  <Table responsive striped hover>
-                    <tbody>
-                      {
-                        userDetails.map(([key, value]) => {
-                          return (
-                            <tr key={key}>
-                              <td>{`${key}:`}</td>
-                              <td><strong>{value}</strong></td>
-                            </tr>
-                          )
-                        })
-                      }
-                    </tbody>
-                  </Table>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
+        {userDetails &&
+          <Row>
+            <Col md="5">
+              <Card>
+                <Form action="" method="post" encType="multipart/form-data" className="form-horizontal" onSubmit={this.handleSubmit}>
+
+                  <CardHeader>
+                    <strong>修改账号</strong>
+                  </CardHeader>
+                  <CardBody>
+                    <FormGroup row>
+                      <Col md="3">
+                        <Label htmlFor="text-input">姓名</Label>
+                      </Col>
+                      <Col xs="12" md="9">
+                        <Input type="text" id="text-input" name="fullName" defaultValue={userDetails.fullName} onChange={this.handleChange} required />
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                      <Col md="3">
+                        <Label htmlFor="text-input">手机号码</Label>
+                      </Col>
+                      <Col xs="12" md="9">
+                        <Input type="text" id="text-input" name="mobilePhone" defaultValue={userDetails.mobilePhone} onChange={this.handleChange} required />
+                      </Col>
+                    </FormGroup>
+                  </CardBody>
+                  <CardFooter>
+                    <Button type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o"></i> Submit</Button>
+
+                    <Button type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Reset</Button>
+                  </CardFooter>
+                </Form>
+              </Card>
+            </Col>
+          </Row>
+        }
+
       </div>
     )
   }
 }
 
-export default User;
+function mapStateToProps(state) {
+  const { users, authentication } = state;
+  const { user } = authentication;
+  return {
+    users,
+    user
+  };
+}
+
+export default connect(mapStateToProps)(User);

@@ -8,6 +8,8 @@ export const userActions = {
     logout,
     register,
     getAll,
+    getById,
+    update,
     delete: _delete
 };
 
@@ -75,6 +77,45 @@ function getAll() {
     function request() { return { type: userConstants.GETALL_REQUEST } }
     function success(users) { return { type: userConstants.GETALL_SUCCESS, users } }
     function failure(error) { return { type: userConstants.GETALL_FAILURE, error } }
+}
+
+function getById(id) {
+    return dispatch => {
+        dispatch(request(id));
+
+        userService.getById(id)
+            .then(
+                userDetails => dispatch(success(userDetails)),
+                error => dispatch(failure(error.toString()))
+            );
+    };
+
+    function request() { return { type: userConstants.GETBYID_REQUEST } }
+    function success(userDetails) { return { type: userConstants.GETBYID_SUCCESS, userDetails } }
+    function failure(error) { return { type: userConstants.GETBYID_FAILURE, error } }
+}
+
+function update(id, user) {
+    return dispatch => {
+        dispatch(request(id));
+
+        userService.update(user)
+            .then(
+                user => { 
+                    dispatch(success(id));
+                    history.push('/system/users');
+                    dispatch(alertActions.success('Update successful'));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+
+    function request(id) { return { type: userConstants.UPDATE_REQUEST, id } }
+    function success(id) { return { type: userConstants.UPDATE_SUCCESS, id } }
+    function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript

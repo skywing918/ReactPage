@@ -10,7 +10,7 @@ export const userService = {
     delete: _delete
 };
 
-const apiUrl = 'http://localhost:4000'
+const apiUrl = 'http://172.18.24.135:4000'
 
 function login(username, password) {
     const requestOptions = {
@@ -55,7 +55,7 @@ function getById(id) {
         headers: authHeader()
     };
 
-    return fetch(`${apiUrl}/users/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/account/${id}`, requestOptions).then(handleResponse);
 }
 
 function register(user) {
@@ -75,7 +75,7 @@ function update(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`${apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/account/${user.id}`, requestOptions).then(handleResponse);
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -85,7 +85,7 @@ function _delete(id) {
         headers: authHeader()
     };
 
-    return fetch(`${apiUrl}/users/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${apiUrl}/account/${id}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

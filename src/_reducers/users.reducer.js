@@ -11,9 +11,28 @@ export function users(state = {}, action) {
         items: action.users
       };
     case userConstants.GETALL_FAILURE:
-      return { 
+      return {
         error: action.error
       };
+    case userConstants.GETBYID_REQUEST:
+      return {
+        loading: true
+      };
+    case userConstants.GETBYID_SUCCESS:
+      return {
+        userDetails: action.userDetails
+      };
+    case userConstants.GETBYID_FAILURE:
+      return {
+        error: action.error
+      };
+    case userConstants.UPDATE_REQUEST:
+      return { ...state,
+        updating: true };
+    case userConstants.UPDATE_SUCCESS:
+      return {};
+    case userConstants.UPDATE_FAILURE:
+      return {};
     case userConstants.DELETE_REQUEST:
       // add 'deleting:true' property to user being deleted
       return {
