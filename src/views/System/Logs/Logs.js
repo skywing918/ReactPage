@@ -2,20 +2,27 @@
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Input, Button, Card, CardBody, CardHeader, Col, Row, Table, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 
 import logsData from './LogsData'
+import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 
-function LogRow(props) {
-    const log = props.log
+function dateTimeFormatter(cell, row) {
     return (
-        <tr key={log.id.toString()}>
-            <th scope="row">{log.id}</th>
-            <td>{log.action}</td>
-            <td>{log.model}</td>
-            <td>{log.detail}</td>
-            <td>{log.user}</td>
-            <td>{log.registered}</td>
-            <td><Button color="danger" onClick={() => props.toggle(log)}>查看</Button></td>
-        </tr>
-    )
+        <span>{new Date(cell).toLocaleDateString()} {new Date(cell).toLocaleTimeString()}</span>
+    );
+}
+
+function modalFormatter(cell, row, c, toggle) {
+    return (
+        <span><Button color="danger" onClick={() => toggle(row)}>查看</Button></span>
+    );
+}
+
+function customTotal(from, to, size) {
+    return (
+        <span className="react-bootstrap-table-pagination-total">
+            Showing {from} to {to} of {size} Results
+        </span>
+    );
 }
 
 class Logs extends Component {
@@ -43,12 +50,66 @@ class Logs extends Component {
 
     render() {
 
-        const logList = logsData.filter((log) => log.id < 7)
-
+        const logList = logsData;//.filter((log) => log.id < 7)
+        const columns = [
+            {
+                dataField: 'id',
+                text: '序号'
+            },
+            {
+                dataField: 'action',
+                text: '操作动作'
+            },
+            {
+                dataField: 'model',
+                text: '操作模块'
+            },
+            {
+                dataField: 'detail',
+                text: '操作内容'
+            },
+            {
+                dataField: 'user',
+                text: '操作人'
+            },
+            {
+                dataField: 'registered',
+                text: '操作时间',
+                formatter: dateTimeFormatter
+            },
+            {
+                dataField: '',
+                text: '操作',
+                formatter: modalFormatter,
+                formatExtraData: this.toggle
+            }];
+        const options = {
+            paginationSize: 7,
+            pageStartIndex: 1,
+            // alwaysShowAllBtns: true, // Always show next and previous button
+            //withFirstAndLast: false, // Hide the going to First and Last page button
+            // hideSizePerPage: true, // Hide the sizePerPage dropdown always
+            //hidePageListOnlyOnePage: true, // Hide the pagination list when only one page
+            firstPageText: 'First',
+            prePageText: 'Back',
+            nextPageText: 'Next',
+            lastPageText: 'Last',
+            nextPageTitle: 'First page',
+            prePageTitle: 'Pre page',
+            firstPageTitle: 'Next page',
+            lastPageTitle: 'Last page',
+            showTotal: true,
+            paginationTotalRenderer: customTotal,
+            sizePerPageList: [{
+                text: '7', value: 7
+            }, {
+                text: '10', value: 10
+            }] // A numeric array is also available. the purpose of above example is custom the text
+        };
         return (
             <div className="animated fadeIn">
                 <Modal isOpen={this.state.modal} toggle={this.toggle} className={'modal-info ' + this.props.className}>
-                <ModalHeader toggle={this.toggleInfo}>详细信息</ModalHeader>
+                    <ModalHeader toggle={this.toggleInfo}>详细信息</ModalHeader>
                     <ModalBody>
                         <Row>
                             <Col xs="4">
@@ -117,30 +178,9 @@ class Logs extends Component {
 
                             </CardHeader>
                             <CardBody>
-                                <Table responsive hover>
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">序号</th>
-                                            <th scope="col">操作动作</th>
-                                            <th scope="col">操作模块</th>
-                                            <th scope="col">操作内容</th>
-                                            <th scope="col">操作人</th>
-                                            <th scope="col">操作时间</th>
-                                            <th scope="col">操作</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {logList.map((log, index) =>
-                                            <LogRow key={index} log={log} toggle={this.toggle} />
-                                        )}
-                                    </tbody>
-                                </Table>
-                                <nav>
-                                    <Pagination>
-                                        <PaginationItem><PaginationLink previous tag="button">上一页</PaginationLink></PaginationItem>
-                                        <PaginationItem><PaginationLink next tag="button">下一页</PaginationLink></PaginationItem>
-                                    </Pagination>
-                                </nav>
+                                {logList &&
+                                    <BootstrapTable keyField='id' data={logList} columns={columns} pagination={paginationFactory(options)} />
+                                }
                             </CardBody>
                         </Card>
                     </Col>
