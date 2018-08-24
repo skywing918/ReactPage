@@ -1,28 +1,94 @@
 ﻿import React, { Component } from 'react';
-import { Form, FormGroup, Label, Input, Button, Card, CardBody, CardHeader, Col, Row, Table, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { Form, FormGroup, Label, Input, Button, Card, CardBody, CardHeader, Col, Row} from 'reactstrap';
+
+import BootstrapTable from 'react-bootstrap-table-next';
+import paginationFactory from 'react-bootstrap-table2-paginator';
 
 import rolesData from './RolesData'
 
-function RoleRow(props) {
-  const role = props.role
-  const roleLink = `/system/roles/${role.id}`
-
+function customTotal(from, to, size) {
   return (
-      <tr key={role.id.toString()}>
-        <th scope="row"><input type="checkbox" /></th>
-        <th scope="row"><a href={roleLink}>{role.id}</a></th>
-        <td><a href={roleLink}>{role.name}</a></td>
-        <td>{role.comment}</td>
-    </tr>
-  )
+    <span className="react-bootstrap-table-pagination-total">
+      Showing {from} to {to} of {size} Results
+      </span>
+  );
 }
 
 class Roles extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { selected: [] };
 
+  }
+
+  handleUpdate = () => {
+    if (this.state.selected.length == 0) {
+      alert("请选择一条记录。")
+      return;
+    }
+    var curr = this.state.selected[0]
+    const userLink = `/system/roles/${curr}`
+    window.location = userLink;
+  }
+
+  handleOnSelect = (row, isSelect) => {
+    if (isSelect) {
+      this.setState(() => ({
+        selected: [...this.state.selected, row.id]
+      }));
+    } else {
+      this.setState(() => ({
+        selected: this.state.selected.filter(x => x !== row.id)
+      }));
+    }
+  }
   render() {
 
     const roleList = rolesData.filter((role) => role.id < 10)
 
+    const columns = [
+      {
+        dataField: 'id',
+        text: '序号'
+      },
+      {
+        dataField: 'name',
+        text: '角色名称'
+      },
+      {
+        dataField: 'comment',
+        text: '角色描述'
+      }];
+    const selectRow = {
+      mode: 'checkbox',
+      clickToSelect: true,
+      selected: this.state.selected,
+      onSelect: this.handleOnSelect,
+    };
+
+    const options = {
+      paginationSize: 4,
+      pageStartIndex: 1,
+      // alwaysShowAllBtns: true, // Always show next and previous button
+      //withFirstAndLast: false, // Hide the going to First and Last page button
+      // hideSizePerPage: true, // Hide the sizePerPage dropdown always
+      //hidePageListOnlyOnePage: true, // Hide the pagination list when only one page
+      firstPageText: 'First',
+      prePageText: 'Back',
+      nextPageText: 'Next',
+      lastPageText: 'Last',
+      nextPageTitle: 'First page',
+      prePageTitle: 'Pre page',
+      firstPageTitle: 'Next page',
+      lastPageTitle: 'Last page',
+      showTotal: true,
+      paginationTotalRenderer: customTotal,
+      sizePerPageList: [{
+        text: '5', value: 5
+      }, {
+        text: '10', value: 10
+      }] // A numeric array is also available. the purpose of above example is custom the text
+    };
     return (
       <div className="animated fadeIn">
         <Row>
@@ -30,54 +96,27 @@ class Roles extends Component {
             <Card>
               <CardHeader>
                 <Row>
-                    <Col xs="12" sm="6" lg="10">
-                        <Form action="" method="post" inline>
-                            <FormGroup className="pr-1">
-                                <Label htmlFor="userNo" className="pr-1">角色名称</Label>
-                                <Input type="text" id="userNo" />
-                            </FormGroup>
-                        </Form>
-                    </Col>
-                    <Col xs="12" sm="6" lg="2">
-                        <Button type="submit" color="primary">查询</Button>
-                    </Col>
+                  <Col xs="12" sm="6" lg="10">
+                    <Form action="" method="post" inline>
+                      <FormGroup className="pr-1">
+                        <Label htmlFor="userNo" className="pr-1">角色名称</Label>
+                        <Input type="text" id="userNo" />
+                      </FormGroup>
+                    </Form>
+                  </Col>
+                  <Col xs="12" sm="6" lg="2">
+                    <Button type="submit" color="primary">查询</Button>
+                  </Col>
                 </Row>
               </CardHeader>
               <CardBody>
-                <Row>
-                    <Button style={{ margin: '5px' }}>增加</Button>
-                    <Button style={{ margin: '5px' }}>修改</Button>
-                    <Button style={{ margin: '5px' }}>删除</Button>
-                    <Button style={{ margin: '5px' }}>分配权限</Button>
+                <Row style={{ padding: '10px' }}>
+                  <Button style={{ margin: '5px' }}>增加</Button>
+                  <Button style={{ margin: '5px' }} onClick={this.handleUpdate}>修改</Button>
+                  <Button style={{ margin: '5px' }}>删除</Button>
+                  <Button style={{ margin: '5px' }}>分配权限</Button>
                 </Row>
-                <Table responsive hover>
-                  <thead>
-                    <tr>
-                      <th scope="col"><input type="checkbox"/></th>
-                      <th scope="col">序号</th>
-                      <th scope="col">角色名称</th>
-                      <th scope="col">角色描述</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {roleList.map((role, index) =>
-                      <RoleRow key={index} role={role}/>
-                    )}
-                  </tbody>
-                  </Table>
-                  <nav>
-                     <Pagination>
-                        <PaginationItem>
-                        <PaginationLink previous tag="button">Prev</PaginationLink></PaginationItem>
-                        <PaginationItem active>
-                        <PaginationLink tag="button">1</PaginationLink>
-                        </PaginationItem>
-                        <PaginationItem><PaginationLink tag="button">2</PaginationLink></PaginationItem>
-                        <PaginationItem><PaginationLink tag="button">3</PaginationLink></PaginationItem>
-                        <PaginationItem><PaginationLink tag="button">4</PaginationLink></PaginationItem>
-                        <PaginationItem><PaginationLink next tag="button">Next</PaginationLink></PaginationItem>
-                    </Pagination>
-                 </nav>
+                <BootstrapTable keyField='id' data={roleList} columns={columns} selectRow={selectRow} pagination={paginationFactory(options)} />
               </CardBody>
             </Card>
           </Col>
