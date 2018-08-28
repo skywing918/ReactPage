@@ -10,6 +10,8 @@ export const userActions = {
     getAll,
     getById,
     update,
+    lockOrUnLock,
+    reset,
     delete: _delete
 };
 
@@ -116,6 +118,38 @@ function update(id, user) {
     function request(id) { return { type: userConstants.UPDATE_REQUEST, id } }
     function success(id) { return { type: userConstants.UPDATE_SUCCESS, id } }
     function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
+}
+
+function reset(id) {
+    return dispatch => {
+        dispatch(request(id));
+
+        userService.reset(id)
+            .then(
+                user => dispatch(success(id)),
+                error => dispatch(failure(id, error.toString()))
+            );
+    };
+
+    function request(id) { return { type: userConstants.LOCKORUNLOCK_REQUEST, id } }
+    function success(id) { return { type: userConstants.LOCKORUNLOCK_SUCCESS, id } }
+    function failure(id, error) { return { type: userConstants.LOCKORUNLOCK_FAILURE, id, error } }
+}
+
+function lockOrUnLock(id, user) {
+    return dispatch => {
+        dispatch(request(id));
+
+        userService.update(user)
+            .then(
+                user => dispatch(success(id)),
+                error => dispatch(failure(id, error.toString()))
+            );
+    };
+
+    function request(id) { return { type: userConstants.LOCKORUNLOCK_REQUEST, id } }
+    function success(id) { return { type: userConstants.LOCKORUNLOCK_SUCCESS, id } }
+    function failure(id, error) { return { type: userConstants.LOCKORUNLOCK_FAILURE, id, error } }
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript

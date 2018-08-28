@@ -60,6 +60,53 @@ class Users extends Component {
         window.location = userLink;
     }
 
+    handleReset = () => {
+        if (this.state.selected.length == 0) {
+            alert("请选择一条记录。")
+            return;
+        }
+        const { dispatch } = this.props;
+        if (window.confirm('Are you sure you wish to delete this item?')) {
+            this.state.selected.forEach(function (id) {
+                dispatch(userActions.reset(id));
+            })
+        }
+    }
+
+    handleLock = () => {
+        if (this.state.selected.length == 0) {
+            alert("请选择一条记录。")
+            return;
+        }
+        const { dispatch, users } = this.props;
+        if (window.confirm('Are you sure you wish to delete this item?')) {
+            this.state.selected.forEach(function (id) {
+                var detials = users.items.find(function (row) {
+                    return row => row.id === id;
+                });
+                detials.userStatus = 'Inactive';
+                dispatch(userActions.lockOrUnLock(id, detials));
+            })
+        }
+    }
+
+    handleUnLock = () => {
+        if (this.state.selected.length == 0) {
+            alert("请选择一条记录。")
+            return;
+        }
+        const { dispatch, users } = this.props;
+        if (window.confirm('Are you sure you wish to delete this item?')) {
+            this.state.selected.forEach(function (id) {
+                var detials = users.items.find(function (row) {
+                    return row => row.id === id;
+                });
+                detials.userStatus = 'Active';
+                dispatch(userActions.lockOrUnLock(id, detials));
+            })
+        }
+    }
+
     handleDelete = () => {
         const { dispatch } = this.props;
         if (window.confirm('Are you sure you wish to delete this item?')) {
@@ -191,9 +238,9 @@ class Users extends Component {
                                     <Button color="info" style={{ margin: '5px' }} onClick={this.handleCreate}>增加</Button>
                                     <Button color="warning" style={{ margin: '5px' }} onClick={this.handleUpdate}>修改</Button>
                                     <Button color="danger" style={{ margin: '5px' }} onClick={this.handleDelete}>删除</Button>
-                                    <Button style={{ margin: '5px' }}>密码重置</Button>
-                                    <Button color="dark" style={{ margin: '5px' }}>锁定</Button>
-                                    <Button color="success" style={{ margin: '5px' }}>解锁</Button>
+                                    <Button style={{ margin: '5px' }} onClick={this.handleReset}>密码重置</Button>
+                                    <Button color="dark" style={{ margin: '5px' }} onClick={this.handleLock}>锁定</Button>
+                                    <Button color="success" style={{ margin: '5px' }} onClick={this.handleUnLock}>解锁</Button>
                                 </Row>
                                 {users.items &&
                                     <BootstrapTable keyField='id' data={users.items} columns={columns} selectRow={selectRow} pagination={paginationFactory(options)} />

@@ -33,6 +33,14 @@ export function users(state = {}, action) {
       return {};
     case userConstants.UPDATE_FAILURE:
       return {};
+    case userConstants.LOCKORUNLOCK_REQUEST:
+      return { ...state,
+        updating: true };
+    case userConstants.LOCKORUNLOCK_SUCCESS:
+      return {...state};
+    case userConstants.LOCKORUNLOCK_FAILURE:
+      return {...state,
+        updating: false};
     case userConstants.DELETE_REQUEST:
       // add 'deleting:true' property to user being deleted
       return {
