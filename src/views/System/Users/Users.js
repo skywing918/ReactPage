@@ -7,6 +7,12 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import { connect } from 'react-redux';
 import { userActions } from '../../../_actions';
 
+function imageFormatter(cell, row) {
+    return (
+        <img src={row.photo} height={35}/>
+    );
+}
+
 function statusFormatter(cell, row) {
     const getBadge = (status) => {
         return status === 'Active' ? 'success' :
@@ -82,7 +88,7 @@ class Users extends Component {
         if (window.confirm('Are you sure you wish to delete this item?')) {
             this.state.selected.forEach(function (id) {
                 var detials = users.items.find(function (row) {
-                    return row => row.id === id;
+                    return row.id === id;
                 });
                 detials.userStatus = 'Inactive';
                 dispatch(userActions.lockOrUnLock(id, detials));
@@ -99,7 +105,7 @@ class Users extends Component {
         if (window.confirm('Are you sure you wish to delete this item?')) {
             this.state.selected.forEach(function (id) {
                 var detials = users.items.find(function (row) {
-                    return row => row.id === id;
+                    return row.id === id;
                 });
                 detials.userStatus = 'Active';
                 dispatch(userActions.lockOrUnLock(id, detials));
@@ -134,6 +140,11 @@ class Users extends Component {
             {
                 dataField: 'id',
                 text: '序号'
+            },
+            {
+                dataField: 'photo',
+                text: '照片',
+                formatter: imageFormatter
             },
             {
                 dataField: 'fullName',
