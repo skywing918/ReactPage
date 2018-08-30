@@ -14,16 +14,7 @@ import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 // D3 Map
 function D3Map(props) {
     const { height, width } = props.size;
-    let centerX = 112;
-    let centerY = 41;
-    if (width > 567 && width < 992) {
-        centerX = 162
-        centerY = 41;
-    } else if (width < 567) {
-        centerX = 222
-        centerY = -27;
-    }
-    const projection = geoMercator().center([centerX, centerY]).scale(width / 2.5);
+    const projection = geoMercator().scale(width / 2.5).translate([-width*0.45,width*0.45]);
     const pathGenerator = geoPath().projection(projection);
     const countries = chinadata.features
         .map((d, i) => <path
