@@ -70,7 +70,7 @@ class Login extends Component {
                           </InputGroupText>
                         </InputGroupAddon>
                         
-                        <Input type="text" placeholder="Username" autoComplete="username" name="username" value={username} onChange={this.handleChange}/>
+                        <Input type="text" placeholder="Username" autoComplete="username" name="username" value={username} onChange={this.handleChange} required/>
                       </InputGroup>
                       <InputGroup className="mb-4">
                         <InputGroupAddon addonType="prepend">
@@ -78,7 +78,7 @@ class Login extends Component {
                             <i className="icon-lock"></i>
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input type="password" placeholder="Password" autoComplete="current-password" name="password" value={password} onChange={this.handleChange}/>
+                        <Input type="password" placeholder="Password" autoComplete="current-password" name="password" value={password} onChange={this.handleChange} required/>
                       </InputGroup>
                       <Row>
                         <Col xs="6">
@@ -96,8 +96,7 @@ class Login extends Component {
                   <CardBody className="text-center">
                     <div>
                       <h2>Sign up</h2>
-                      <p>请联系管理员</p>
-                      
+                      <p>User:supUser PW:P@ssw0rd</p>
                     </div>
                   </CardBody>
                 </Card>

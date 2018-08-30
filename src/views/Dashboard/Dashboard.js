@@ -13,8 +13,8 @@ import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 
 // D3 Map
 function D3Map(props) {
-    const { height, width } = props.size;
-    const projection = geoMercator().scale(width / 2.5).translate([-width*0.45,width*0.45]);
+    const { width } = props.size;
+    const projection = geoMercator().scale(width / 2.5).translate([-width * 0.45, width * 0.45]);
     const pathGenerator = geoPath().projection(projection);
     const countries = chinadata.features
         .map((d, i) => <path

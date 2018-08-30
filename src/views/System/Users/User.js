@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Label, Input, Button, FormText, Card, CardFooter, CardBody, CardHeader, Col, Row } from 'reactstrap';
+import { Form, FormGroup, Label, Input, Button, Card, CardFooter, CardBody, CardHeader, Col, Row } from 'reactstrap';
 
 import { connect } from 'react-redux';
 import { userActions } from '../../../_actions';
@@ -26,7 +26,7 @@ class User extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.users != this.state.detail) {
+    if (nextProps.users !== this.state.detail) {
       this.setState({ ...this.state, detail: nextProps.users.userDetails });
     }
   }

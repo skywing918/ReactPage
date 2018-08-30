@@ -51,7 +51,7 @@ class Users extends Component {
     }
 
     handleUpdate = () => {
-        if (this.state.selected.length == 0) {
+        if (this.state.selected.length === 0) {
             alert("请选择一条记录。")
             return;
         }
@@ -61,7 +61,7 @@ class Users extends Component {
     }
 
     handleReset = () => {
-        if (this.state.selected.length == 0) {
+        if (this.state.selected.length === 0) {
             alert("请选择一条记录。")
             return;
         }
@@ -74,7 +74,7 @@ class Users extends Component {
     }
 
     handleLock = () => {
-        if (this.state.selected.length == 0) {
+        if (this.state.selected.length === 0) {
             alert("请选择一条记录。")
             return;
         }
@@ -91,7 +91,7 @@ class Users extends Component {
     }
 
     handleUnLock = () => {
-        if (this.state.selected.length == 0) {
+        if (this.state.selected.length === 0) {
             alert("请选择一条记录。")
             return;
         }
