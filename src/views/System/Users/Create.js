@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Form, FormGroup, Label, Input, Button, FormText, Card, CardFooter, CardBody, CardHeader, Col, Row } from 'reactstrap';
+import { Form, FormGroup, Label, Input, Button, Card, CardFooter, CardBody, CardHeader, Col, Row } from 'reactstrap';
 import { connect } from 'react-redux';
 
 import { userActions } from '../../../_actions';
@@ -15,13 +15,14 @@ class CreateUser extends Component {
                 mobilePhone: '',
                 userRole: 'Admin',
                 userStatus: 'Active',
+                photo:'',
                 password: ''
-            },
-            submitted: false
+            }
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleImageChange = this.handleImageChange.bind(this);
     }
 
     handleChange(event) {
@@ -34,6 +35,26 @@ class CreateUser extends Component {
             }
         });
     }
+
+    handleImageChange(event) {
+        const { name} = event.target;
+        const { user } = this.state;
+        let reader = new FileReader();
+        let file = event.target.files[0];
+    
+        reader.onloadend = () => {
+            if(reader.result!=null){
+                this.setState({
+                    user: {
+                        ...user,
+                        [name]: reader.result
+                    }
+                });
+            }
+        }
+    
+        reader.readAsDataURL(file)
+      }
 
     handleSubmit(event) {
         event.preventDefault();
@@ -61,26 +82,26 @@ class CreateUser extends Component {
                                 <CardBody>
                                     <FormGroup row>
                                         <Col md="3">
-                                            <Label htmlFor="text-input">姓名</Label>
+                                            <Label htmlFor="name">姓名</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="text-input" name="fullName" value={user.fullName} onChange={this.handleChange} required />
+                                            <Input type="text" id="name" name="fullName" value={user.fullName} onChange={this.handleChange} required />
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
                                         <Col md="3">
-                                            <Label htmlFor="text-input">工号</Label>
+                                            <Label htmlFor="number">工号</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="text-input" name="userName" value={user.userName} onChange={this.handleChange} required />
+                                            <Input type="text" id="number" name="userName" value={user.userName} onChange={this.handleChange} required />
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
                                         <Col md="3">
-                                            <Label htmlFor="text-input">手机号码</Label>
+                                            <Label htmlFor="phone">手机号码</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="text" id="text-input" name="mobilePhone" value={user.mobilePhone} onChange={this.handleChange} required />
+                                            <Input type="text" id="phone" name="mobilePhone" value={user.mobilePhone} onChange={this.handleChange} required />
                                         </Col>
                                     </FormGroup>
 
@@ -113,18 +134,25 @@ class CreateUser extends Component {
                                             <Label htmlFor="password-input">登陆密码</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="password" id="password-input" autoComplete="new-password" name="password" value={user.password} onChange={this.handleChange} required/>
+                                            <Input type="password" id="password-input" autoComplete="new-password" name="password" value={user.password} onChange={this.handleChange} required />
                                         </Col>
                                     </FormGroup>
                                     <FormGroup row>
                                         <Col md="3">
-                                            <Label htmlFor="password-input">确认密码</Label>
+                                            <Label htmlFor="password-input-confirm">确认密码</Label>
                                         </Col>
                                         <Col xs="12" md="9">
-                                            <Input type="password" id="password-input" autoComplete="new-password" required/>
+                                            <Input type="password" id="password-input-confirm" autoComplete="new-password" required />
                                         </Col>
                                     </FormGroup>
-
+                                    <FormGroup row>
+                                        <Col md="3">
+                                            <Label htmlFor="photo">File input</Label>
+                                        </Col>
+                                        <Col xs="12" md="9">
+                                            <Input type="file" id="file-input" name="photo" onChange={this.handleImageChange}/>
+                                        </Col>
+                                    </FormGroup>
                                 </CardBody>
                                 <CardFooter>
                                     <Button type="submit" size="sm" color="primary"><i className="fa fa-dot-circle-o"></i> Submit</Button>
